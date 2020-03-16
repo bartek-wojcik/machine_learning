@@ -60,7 +60,7 @@ class Classifier:
 
 datasets = {
     'shopper': ShoppersDataset('online_shoppers_intention.csv'),
-    'hear': HeartDataset('heart.csv'),
+    'heart': HeartDataset('heart.csv'),
     'credit card': CreditCardDataset('creditcard.csv'),
 }
 
