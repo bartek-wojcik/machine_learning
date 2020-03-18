@@ -1,3 +1,4 @@
+graphviz
 joblib==0.14.1
 numpy==1.18.1
 pandas==1.0.1
