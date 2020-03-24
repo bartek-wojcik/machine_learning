@@ -7,6 +7,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from abc import ABC, abstractmethod
 import graphviz
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Dataset(ABC):
@@ -55,10 +57,14 @@ class Classifier(ABC):
     result = None
     name = None
     model = None
+    x = None
+    y = None
 
     def __init__(self, name, data):
         self.name = name
         x_train, x_test, y_train, y_test = data
+        self.x = x_train
+        self.y = y_train
         self.result = self.model.fit(x_train, y_train)
         self.score = self.model.score(x_test, y_test)
         self.plot()
@@ -91,9 +97,21 @@ class Vectors(Classifier):
     model = LinearSVC(max_iter=1000, C=1000)
 
     def plot(self):
-        pass
-    
-    
+        plt.scatter(self.x.iloc[:, 0], self.x.iloc[:, 1], c=self.y, s=30)
+        ax = plt.gca()
+        xlim = ax.get_xlim()
+        ylim = ax.get_ylim()
+        xx = np.linspace(xlim[0], xlim[1], 30)
+        yy = np.linspace(ylim[0], ylim[1], 30)
+        XX, YY = np.meshgrid(yy, xx)
+        xy = np.vstack([XX.ravel(), YY.ravel()]).T
+        model = LinearSVC(max_iter=1000, C=1000)
+        model.fit(self.x.iloc[:, 0:2], self.y)
+        Z = model.decision_function(xy).reshape(XX.shape)
+        ax.contour(XX, YY, Z, colors='k', levels=[-1, 0, 1], alpha=0.5, linestyles=['--', '-', '--'])
+        plt.show()
+
+
 class Knn(Classifier):
     model = KNeighborsClassifier(n_neighbors=5)
 
