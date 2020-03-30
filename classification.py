@@ -119,23 +119,24 @@ class Knn(Classifier):
         pass
 
 
-datasets = {
-    'heart': HeartDataset('heart.csv'),
-    'shopper': ShoppersDataset('online_shoppers_intention.csv'),
-    'credit card': CreditCardDataset('creditcard.csv'),
-}
+if __name__ == "__main__":
+    datasets = {
+        'heart': HeartDataset('heart.csv'),
+        'shopper': ShoppersDataset('online_shoppers_intention.csv'),
+        'credit card': CreditCardDataset('creditcard.csv'),
+    }
 
-classifiers = {
-    'decision tree': DecisionTree,
-    'bayes': GaussianNB,
-    'vectors': Vectors,
-    'knn': Knn,
-    'random forest': RandomForest,
-}
+    classifiers = {
+        'decision tree': DecisionTree,
+        'bayes': GaussianNB,
+        'vectors': Vectors,
+        'knn': Knn,
+        'random forest': RandomForest,
+    }
 
-for dataset_name, dataset in datasets.items():
-    for classifier_name, classifier in classifiers.items():
-        result = classifier(dataset_name + ' ' + classifier_name, dataset.data)
-        print('Dataset: {} Classifier: {} Score: {}'.format(
-            dataset_name, classifier_name, result.score
-        ))
+    for dataset_name, dataset in datasets.items():
+        for classifier_name, classifier in classifiers.items():
+            result = classifier(dataset_name + ' ' + classifier_name, dataset.data)
+            print('Dataset: {} Classifier: {} Score: {}'.format(
+                dataset_name, classifier_name, result.score
+            ))
